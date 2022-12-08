@@ -1,6 +1,5 @@
 {
     "extends": [
-        "eslint:recommended",
         "plugin:react-hooks/recommended",
         "universe/native"
     ],
