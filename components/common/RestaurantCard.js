@@ -1,4 +1,4 @@
-import { Button, Card, Chip } from 'react-native-paper';
+import { Button, Card } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -6,13 +6,12 @@ import ChipGroup from './ChipGroup';
 
 
 const RestaurantCard = ({ restaurant }) => {
-  const upperFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.setOptions({ })
-    navigation.navigate('View', { restaurant: restaurant });
-  }
+    navigation.setOptions({ });
+    navigation.navigate('View', { id: restaurant.id });
+  };
 
   return (
     <Card style={{ marginBottom: 8 }}>

@@ -1,9 +1,10 @@
 import { ToastAndroid, View } from 'react-native';
 import { HelperText, IconButton, Text, TextInput } from 'react-native-paper';
 import styles from '../../styles';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStorage } from '../StorageContextProvider';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import CheckButton from '../common/CheckButton';
 
 const createForm = (fields) => {
   const formField = {
@@ -19,10 +20,15 @@ const createForm = (fields) => {
   return form;
 };
 
-const FormScreen = ({ navigation, ...props }) => {
-  const {addRestaurant} = useStorage();
-  const [formData, setFormData] = useState(createForm(['name', 'phone', 'description', 'address']));
+const FormScreen = ({ navigation, route }) => {
+  const fields = ['name', 'phone', 'description', 'address'];
+  const id = route.params?.id;
+
+  const {addRestaurant, updateRestaurant, findRestaurant} = useStorage();
+  const [formData, setFormData] = useState(createForm(fields));
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const address = useRef();
+
 
   const apiKey = 'AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM';
 
@@ -47,25 +53,30 @@ const FormScreen = ({ navigation, ...props }) => {
     setIsSubmitted(false);
 
     if(!errors) {
-      const data = {
+      let data = {
         name: formData.name.value.trim(),
         phone: formData.phone.value,
         description: formData.description.value,
         address: formData.address.value
       };
-      addRestaurant(data);
-      navigation.navigate('Home');
-      ToastAndroid.showWithGravity("Restaurant added", ToastAndroid.SHORT, ToastAndroid.TOP);
+      if(id) {
+        data = {...data, id};
+        updateRestaurant(data);
+        navigation.goBack();
+        ToastAndroid.showWithGravity('Restaurant updated', ToastAndroid.SHORT, ToastAndroid.TOP);
+      }
+      else {
+        addRestaurant(data);
+        navigation.navigate('Home');
+        ToastAndroid.showWithGravity('Restaurant added', ToastAndroid.SHORT, ToastAndroid.TOP);
+      }
     }
   };
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <IconButton
-          icon="check"
-          size={30}
-          iconColor="white"
+        <CheckButton
           onPress={() => setIsSubmitted((prevState) => !prevState)}
         />)
     });
@@ -77,13 +88,27 @@ const FormScreen = ({ navigation, ...props }) => {
     }
   }, [isSubmitted]);
 
+  useEffect(() => {
+    if(id) {
+      const restaurant = findRestaurant(id);
+      fields.forEach(field => {
+        if(field === 'address') {
+          address.current?.setAddressText(restaurant.address);
+        }
+        else {
+          setFormText(field, restaurant[field]);
+        }
+      });
+    }
+  }, [id]);
+
   return (
     <View style={[styles.container, {flex: 1, width: 'auto'}]}>
-      <Text>{formData.name.value}</Text>
       <TextInput
         label="Name"
         onChangeText={text => setFormText('name', text)}
         error={formData.name.error}
+        value={formData.name.value}
         activeUnderlineColor="#0097A7"
         style={{
           backgroundColor: 'white',
@@ -93,10 +118,11 @@ const FormScreen = ({ navigation, ...props }) => {
       {formData.name.error && (
         <HelperText type="error" visible={formData.name.error} padding="none">{formData.name.message}</HelperText>
       )}
-
+      
       <TextInput
         label="Phone"
         onChangeText={text => setFormText('phone', text)}
+        value={formData.phone.value}
         error={formData.phone.error}
         activeUnderlineColor="#0097A7"
         style={{
@@ -111,6 +137,7 @@ const FormScreen = ({ navigation, ...props }) => {
       <TextInput
         label="Description"
         onChangeText={text => setFormText('description', text)}
+        value={formData.description.value}
         multiline
         numberOfLines={3}
         activeUnderlineColor="#0097A7"
@@ -140,11 +167,7 @@ const FormScreen = ({ navigation, ...props }) => {
             height: 56,
           },
         }}
-        ref={ref => {
-          if(formData.address.value.length > 0) {
-            ref?.setAddressText('123 myDefault Street, mycity')
-          }
-        }}
+        ref={address}
       />
 
     </View>

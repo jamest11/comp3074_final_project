@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, LogBox } from 'react-native';
+import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerToggleButton } from '@react-navigation/drawer';
-import { Provider as PaperProvider, MD3LightTheme as DefaultTheme, Button } from 'react-native-paper';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Provider as PaperProvider, MD3LightTheme as DefaultTheme } from 'react-native-paper';
+import { createStackNavigator } from '@react-navigation/stack';
 import AboutScreen from './components/screens/AboutScreen';
 import ListScreen from './components/screens/ListScreen';
-import { createStackNavigator } from '@react-navigation/stack';
 import RestaurantScreen from './components/screens/RestaurantScreen';
 import StorageContextProvider from './components/StorageContextProvider';
 import AddButton from './components/common/AddButton';
@@ -20,32 +20,28 @@ const DrawerNav = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#0097A7'
+        },
+        headerTintColor: 'white'
+      }}
     >
       <Drawer.Screen
         name="Home"
         component={ListScreen}
         options={{
-          headerStyle: {
-            backgroundColor: '#0097A7',
-          },
           headerRight: () => <AddButton />,
-          headerTintColor: 'white',
           drawerLabel: 'Restaurants',
         }}
       />
       <Drawer.Screen
         name="About"
         component={AboutScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: '#0097A7',
-          },
-          headerTintColor: 'white'
-        }}
-      />
+/>
     </Drawer.Navigator>
   );
-}
+};
 
 export default function App() {
   return (
@@ -54,6 +50,12 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Drawer"
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: '#0097A7'
+              },
+              headerTintColor: 'white',
+            }}
           >
             <Stack.Screen
               name="Drawer"
@@ -66,20 +68,13 @@ export default function App() {
               name="View"
               component={RestaurantScreen}
               options={{
-                headerStyle: {
-                  backgroundColor: '#0097A7',
-                },
-                headerTintColor: 'white'
+                title: 'View Restaurant'
               }}
             />
             <Stack.Screen
               name="Add"
               component={FormScreen}
               options={{
-                headerStyle: {
-                  backgroundColor: '#0097A7',
-                },
-                headerTintColor: 'white',
                 title: 'Add Restaurant'
               }}
             />
@@ -87,10 +82,6 @@ export default function App() {
               name="Edit"
               component={FormScreen}
               options={{
-                headerStyle: {
-                  backgroundColor: '#0097A7',
-                },
-                headerTintColor: 'white',
                 title: 'Edit Restaurant'
               }}
             />

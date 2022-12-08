@@ -1,26 +1,32 @@
 import { View } from 'react-native';
 import styles from '../../styles';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Button, IconButton, Modal, Portal, Provider, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import ChipGroup from '../common/ChipGroup';
 import RatingGroup from '../common/RatingGroup';
 import { useEffect, useState } from 'react';
 import RatingModal from '../common/RatingModal';
 import { useStorage } from '../StorageContextProvider';
+import EditButton from '../common/EditButton';
 
 
 const RestaurantScreen = ({ route, navigation }) => {
-  const {updateRestaurant, restaurants, emptyRestaurant} = useStorage();
+  const {updateRestaurant, findRestaurant, emptyRestaurant, restaurants} = useStorage();
   const [restaurant, setRestaurant] = useState(emptyRestaurant);
 
   const updateRating = (rating) => {
-    updateRestaurant({id: restaurant.id, rating});
+    updateRestaurant({ id: restaurant.id, rating });
   };
 
   useEffect(() => {
-    setRestaurant(restaurants.find(r => r.id === route.params.restaurant.id));
-  }, [restaurants])
+    navigation.setOptions({
+      headerRight: () => <EditButton id={restaurant.id} />,
+    });
+  }, [navigation, restaurant]);
+
+  useEffect(() => {
+    setRestaurant(findRestaurant(route.params.id));
+  }, [restaurants]);
 
   return (
     <View style={styles.container}>
@@ -36,7 +42,6 @@ const RestaurantScreen = ({ route, navigation }) => {
 
       <Text>{restaurant.address}</Text>
       <StatusBar style="light" />
-
     </View>
   );
 };

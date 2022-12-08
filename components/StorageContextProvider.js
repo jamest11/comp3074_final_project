@@ -15,7 +15,7 @@ const StorageContextProvider = ({ children }) => {
     address: '',
     tags: '',
     rating: 0
-  }
+  };
 
   const getRestaurants = () => {
     storageApi.getRestaurants()
@@ -31,6 +31,10 @@ const StorageContextProvider = ({ children }) => {
     getRestaurants();
   }, []);
 
+  const findRestaurant = (id) => {
+    return restaurants.find((r) => r.id === id);
+  };
+
   const addRestaurant = (data) => {
     data.id = uuid.v4();
     storageApi.addRestaurant(data)
@@ -41,14 +45,15 @@ const StorageContextProvider = ({ children }) => {
   const updateRestaurant = (data) => {
     storageApi.updateRestaurant(data)
       .then(getRestaurants)
-      .catch(console.error)
+      .catch(console.error);
   };
 
   const value = {
     restaurants,
     addRestaurant,
     updateRestaurant,
-    emptyRestaurant
+    emptyRestaurant,
+    findRestaurant
   };
 
   return (
@@ -56,7 +61,7 @@ const StorageContextProvider = ({ children }) => {
       {children}
     </StorageContext.Provider>
   );
-}
+};
 
 const useStorage = () => {
   return useContext(StorageContext);

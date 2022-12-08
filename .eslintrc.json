@@ -13,12 +13,13 @@
         "react-hooks"
     ],
     "rules": {
-        "prettier/prettier": 0,
         "react/react-in-jsx-scope": 0,
         "import/order": 0,
+        "node/handle-callback-err": 0,
         "semi": 1,
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn"
+        "react-hooks/exhaustive-deps": "warn",
+        "prettier/prettier": 0
     },
     "settings": {
         "import/ignore": ["react-native"]

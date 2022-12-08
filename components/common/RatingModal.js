@@ -1,4 +1,4 @@
-import { Button, Chip, IconButton, Modal, Portal, Text } from 'react-native-paper';
+import { IconButton, Modal, Portal } from 'react-native-paper';
 import { useState } from 'react';
 import { View } from 'react-native';
 import styles from '../../styles';

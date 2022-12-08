@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { IconButton } from 'react-native-paper';
 import styles from '../../styles';
 
 const RatingGroup = ({ rating, size }) => {
