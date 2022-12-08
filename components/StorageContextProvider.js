@@ -23,13 +23,13 @@ const StorageContextProvider = ({ children }) => {
 
   const addRestaurant = (data) => {
     data.id = uuid.v4();
-    storageApi.saveRestaurant(data)
+    storageApi.addRestaurant(data)
       .then(getRestaurants)
       .catch(console.error);
   };
 
   const updateRestaurant = (data) => {
-    storageApi.saveRestaurant(data)
+    storageApi.updateRestaurant(data)
       .then(getRestaurants)
       .catch(console.error);
   };

@@ -53,7 +53,7 @@ const FormScreen = ({ navigation, ...props }) => {
         description: formData.description.value,
         address: formData.address.value
       };
-      addRestaurant(data);
+      addRestaurant(data).catch(console.error);
       navigation.navigate('Home');
       ToastAndroid.showWithGravity("Restaurant added", ToastAndroid.SHORT, ToastAndroid.TOP);
     }
@@ -66,7 +66,7 @@ const FormScreen = ({ navigation, ...props }) => {
           icon="check"
           size={30}
           iconColor="white"
-          onPress={() => setIsSubmitted((prev) => !prev)}
+          onPress={() => setIsSubmitted((prevState) => !prevState)}
         />)
     });
   }, [navigation, setIsSubmitted]);
@@ -127,6 +127,7 @@ const FormScreen = ({ navigation, ...props }) => {
         query={{
           key: apiKey,
           language: 'en',
+          components: 'country:ca',
         }}
         textInputProps={{
           InputComp: TextInput,
@@ -138,6 +139,11 @@ const FormScreen = ({ navigation, ...props }) => {
           textInput: {
             height: 56,
           },
+        }}
+        ref={ref => {
+          if(formData.address.value.length > 0) {
+            ref?.setAddressText('123 myDefault Street, mycity')
+          }
         }}
       />
 

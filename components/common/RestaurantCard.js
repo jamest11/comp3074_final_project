@@ -2,6 +2,7 @@ import { Button, Card, Chip } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import ChipGroup from './ChipGroup';
 
 
 const RestaurantCard = ({ restaurant }) => {
@@ -22,11 +23,7 @@ const RestaurantCard = ({ restaurant }) => {
             <MaterialIcons name="star" size={24} key={i} />
           ))}
         </View>
-        <View style={{ display: 'flex', flexDirection: 'row', marginTop: 16 }}>
-          {restaurant.tags && restaurant.tags.split(',').map((tag) => (
-            <Chip style={{ marginEnd: 4 }} key={tag}>{upperFirst(tag)}</Chip>
-          ))}
-        </View>
+        <ChipGroup tags={restaurant.tags} />
         <Button onPress={handlePress}>View</Button>
       </Card.Content>
     </Card>

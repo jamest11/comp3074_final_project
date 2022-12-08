@@ -4,14 +4,29 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: '500'
-  },
   about: {
-    flex: 1,
+    display: 'flex',
     alignItems: 'center',
   },
+  flexGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginVertical: 4,
+    flexWrap: 'wrap',
+    alignItems: 'center'
+  },
+  ratingModal: {
+    backgroundColor: 'white',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: 12,
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 8
+  }
 });
 
 export default styles;
