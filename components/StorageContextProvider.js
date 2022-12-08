@@ -7,6 +7,16 @@ const StorageContext = createContext();
 const StorageContextProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
 
+  const emptyRestaurant = {
+    id: null,
+    name: '',
+    phoneNumber: '',
+    description: '',
+    address: '',
+    tags: '',
+    rating: 0
+  }
+
   const getRestaurants = () => {
     storageApi.getRestaurants()
       .then(data => {
@@ -31,13 +41,14 @@ const StorageContextProvider = ({ children }) => {
   const updateRestaurant = (data) => {
     storageApi.updateRestaurant(data)
       .then(getRestaurants)
-      .catch(console.error);
+      .catch(console.error)
   };
 
   const value = {
     restaurants,
     addRestaurant,
-    updateRestaurant
+    updateRestaurant,
+    emptyRestaurant
   };
 
   return (

@@ -5,20 +5,22 @@ import { Button, IconButton, Modal, Portal, Provider, Text } from 'react-native-
 import { StatusBar } from 'expo-status-bar';
 import ChipGroup from '../common/ChipGroup';
 import RatingGroup from '../common/RatingGroup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RatingModal from '../common/RatingModal';
 import { useStorage } from '../StorageContextProvider';
 
 
 const RestaurantScreen = ({ route, navigation }) => {
-  const [restaurant, setRestaurant] = useState(route.params.restaurant);
-  const {updateRestaurant} = useStorage();
+  const {updateRestaurant, restaurants, emptyRestaurant} = useStorage();
+  const [restaurant, setRestaurant] = useState(emptyRestaurant);
 
   const updateRating = (rating) => {
-    const data = {id: restaurant.id, rating};
-    updateRestaurant(data);
-    setRestaurant((prevState) => ({...prevState, ...data}));
+    updateRestaurant({id: restaurant.id, rating});
   };
+
+  useEffect(() => {
+    setRestaurant(restaurants.find(r => r.id === route.params.restaurant.id));
+  }, [restaurants])
 
   return (
     <View style={styles.container}>

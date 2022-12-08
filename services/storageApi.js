@@ -16,11 +16,6 @@ const getRestaurants = async () => {
   return AsyncStorage.getItem('@restaurants');
 };
 
-const getRestaurant = async () => {
-  let restaurants = await getRestaurants();
-  restaurants = JSON.parse(restaurants)
-}
-
 const addRestaurant = async (data) => {
   const restaurant = { ...emptyRestaurant, ...data };
   let restaurants = await getRestaurants();
@@ -45,7 +40,7 @@ const updateRestaurant = async (data) => {
     }
   }
 
-  return AsyncStorage.setItem('@restaurants', JSON.stringify(restaurants))
+  await AsyncStorage.setItem('@restaurants', JSON.stringify(restaurants))
 }
 
 const exports = { getRestaurants, addRestaurant, updateRestaurant }

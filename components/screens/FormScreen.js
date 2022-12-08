@@ -53,7 +53,7 @@ const FormScreen = ({ navigation, ...props }) => {
         description: formData.description.value,
         address: formData.address.value
       };
-      addRestaurant(data).catch(console.error);
+      addRestaurant(data);
       navigation.navigate('Home');
       ToastAndroid.showWithGravity("Restaurant added", ToastAndroid.SHORT, ToastAndroid.TOP);
     }
