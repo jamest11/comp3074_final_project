@@ -1,5 +1,5 @@
 import { ToastAndroid, View } from 'react-native';
-import { Button, HelperText, IconButton, Text, TextInput } from 'react-native-paper';
+import { HelperText, IconButton, Text, TextInput } from 'react-native-paper';
 import styles from '../../styles';
 import { useEffect, useState } from 'react';
 import { useStorage } from '../StorageContextProvider';
@@ -10,43 +10,41 @@ const createForm = (fields) => {
     value: '',
     error: false,
     message: ''
-  }
-  const form = {}
+  };
+  const form = {};
   fields.forEach(field => {
     form[field] = formField;
-  })
+  });
 
   return form;
-}
+};
 
 const FormScreen = ({ navigation, ...props }) => {
   const {addRestaurant} = useStorage();
   const [formData, setFormData] = useState(createForm(['name', 'phone', 'description', 'address']));
-
-  const [count, setCount] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const apiKey = 'AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM';
 
   const setFormText = (field, value) => {
-    setFormData(data => ({...data, [field]: {...data[field], value}}))
-  }
+    setFormData(data => ({...data, [field]: {...data[field], value}}));
+  };
 
   const setFormError = (field, error, message) => {
     setFormData({...formData, [field]: {...formData[field], error, message}});
-  }
+  };
 
   const handleSubmit = () => {
-    console.log(formData.name.value);
     let errors = false;
 
     if(formData.name.value.trim().length === 0) {
-      console.log(formData)
       errors = true;
       setFormError('name', true, 'Name is required');
     }
     else {
       setFormError('name', false, '');
     }
+    setIsSubmitted(false);
 
     if(!errors) {
       const data = {
@@ -54,7 +52,7 @@ const FormScreen = ({ navigation, ...props }) => {
         phone: formData.phone.value,
         description: formData.description.value,
         address: formData.address.value
-      }
+      };
       addRestaurant(data);
       navigation.navigate('Home');
       ToastAndroid.showWithGravity("Restaurant added", ToastAndroid.SHORT, ToastAndroid.TOP);
@@ -62,17 +60,22 @@ const FormScreen = ({ navigation, ...props }) => {
   };
 
   useEffect(() => {
-    console.log('effect')
     navigation.setOptions({
       headerRight: () => (
         <IconButton
           icon="check"
           size={30}
           iconColor="white"
-          onPress={handleSubmit}
+          onPress={() => setIsSubmitted((prev) => !prev)}
         />)
     });
-  }, [navigation])
+  }, [navigation, setIsSubmitted]);
+
+  useEffect(() => {
+    if(isSubmitted) {
+      handleSubmit();
+    }
+  }, [isSubmitted]);
 
   return (
     <View style={[styles.container, {flex: 1, width: 'auto'}]}>
@@ -93,7 +96,7 @@ const FormScreen = ({ navigation, ...props }) => {
 
       <TextInput
         label="Phone"
-
+        onChangeText={text => setFormText('phone', text)}
         error={formData.phone.error}
         activeUnderlineColor="#0097A7"
         style={{
@@ -107,7 +110,7 @@ const FormScreen = ({ navigation, ...props }) => {
 
       <TextInput
         label="Description"
-
+        onChangeText={text => setFormText('description', text)}
         multiline
         numberOfLines={3}
         activeUnderlineColor="#0097A7"
@@ -116,9 +119,30 @@ const FormScreen = ({ navigation, ...props }) => {
           marginBottom: 10,
         }}
       />
-      <Text>{count}</Text>
+
+      <GooglePlacesAutocomplete
+        onPress={(data, details = null) => {
+          setFormText('address', data.description);
+        }}
+        query={{
+          key: apiKey,
+          language: 'en',
+        }}
+        textInputProps={{
+          InputComp: TextInput,
+          label: 'Address',
+          mode: 'flat',
+          activeUnderlineColor: '#0097A7'
+        }}
+        styles={{
+          textInput: {
+            height: 56,
+          },
+        }}
+      />
+
     </View>
   );
 };
 
-export default FormScreen
+export default FormScreen;
