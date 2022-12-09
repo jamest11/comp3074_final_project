@@ -1,5 +1,5 @@
 import { ToastAndroid, View } from 'react-native';
-import { HelperText, IconButton, Text, TextInput } from 'react-native-paper';
+import { HelperText, TextInput } from 'react-native-paper';
 import styles from '../../styles';
 import { useEffect, useRef, useState } from 'react';
 import { useStorage } from '../StorageContextProvider';

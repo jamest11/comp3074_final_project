@@ -9,8 +9,8 @@ const RatingGroup = ({ rating, size }) => {
         [...Array(5)].map((e, i) => (
           <MaterialIcons name="star-outline" size={size} key={i} color="#F8E71C" />
         )
-      ) : [...Array(rating)].map((e, i) => (
-        <MaterialIcons name="star" size={size} key={i} color="#F8E71C" />
+      ) : [...Array(5)].map((e, i) => (
+        <MaterialIcons name={i + 1 <= rating ? 'star': 'star-outline'} size={size} key={i} color="#F8E71C" />
       ))}
     </View>
   );
