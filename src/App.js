@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo';
 import 'react-native-gesture-handler';
 import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -43,7 +44,7 @@ const DrawerNav = () => {
   );
 };
 
-export default function App() {
+function App() {
   return (
     <StorageContextProvider>
       <PaperProvider theme={DefaultTheme}>
@@ -91,3 +92,5 @@ export default function App() {
     </StorageContextProvider>
   );
 };
+
+registerRootComponent(App);
