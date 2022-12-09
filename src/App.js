@@ -11,6 +11,7 @@ import RestaurantScreen from './components/screens/RestaurantScreen';
 import StorageContextProvider from './components/StorageContextProvider';
 import AddButton from './components/common/AddButton';
 import FormScreen from './components/screens/FormScreen';
+import MapScreen from './components/screens/MapScreen';
 
 LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
 
@@ -84,6 +85,13 @@ function App() {
               component={FormScreen}
               options={{
                 title: 'Edit Restaurant'
+              }}
+            />
+            <Stack.Screen
+              name="Map"
+              component={MapScreen}
+              options={{
+                title: 'Restaurant Map'
               }}
             />
           </Stack.Navigator>

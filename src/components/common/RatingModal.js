@@ -1,11 +1,11 @@
 import { IconButton, Modal, Portal } from 'react-native-paper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import styles from '../../styles';
 
 const RatingModal = ({ currentRating, updateRating }) => {
   const [visible, setVisible] = useState(false);
-  const [rating, setRating] = useState(currentRating);
+  const [rating, setRating] = useState(0);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -14,6 +14,10 @@ const RatingModal = ({ currentRating, updateRating }) => {
     updateRating(rating);
     hideModal();
   };
+
+  useEffect(() => {
+    setRating(currentRating);
+  }, [currentRating]);
 
   return (
     <View>
