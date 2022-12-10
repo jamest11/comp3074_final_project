@@ -91,7 +91,7 @@ const appTheme = {
     ...LightTheme.colors,
     ...paperColors,
     primary: '#0097A7',
-    secondary: '#0085EB',
+    //secondary: '#d4301b',
   },
 };
 

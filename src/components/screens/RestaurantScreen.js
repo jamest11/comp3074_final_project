@@ -52,7 +52,7 @@ const RestaurantScreen = ({ route, navigation }) => {
         <Button
           icon="map"
           mode="contained"
-          buttonColor="#0085EB"
+          buttonColor={theme.colors.secondary}
           onPress={() => navigation.navigate('Map')}
         >
           Map

@@ -1,4 +1,4 @@
-import { IconButton, Modal, Portal } from 'react-native-paper';
+import { IconButton, Modal, Portal, useTheme } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import styles from '../../styles';
@@ -6,6 +6,7 @@ import styles from '../../styles';
 const RatingModal = ({ currentRating, updateRating }) => {
   const [visible, setVisible] = useState(false);
   const [rating, setRating] = useState(0);
+  const theme = useTheme();
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -29,7 +30,7 @@ const RatingModal = ({ currentRating, updateRating }) => {
                 icon={i + 1 <= rating ? 'star': 'star-outline'}
                 size={36}
                 style={{width: 36, height: 36, marginHorizontal: 4}}
-                iconColor="#F8E71C"
+                iconColor={theme.colors.secondary}
                 key={i}
                 onPress={() => setRating(i + 1)}
               />
@@ -39,14 +40,14 @@ const RatingModal = ({ currentRating, updateRating }) => {
             icon="check"
             size={36}
             style={{width:36, height: 36}}
-            iconColor="green"
+            iconColor={theme.colors.primary}
             onPress={handleSave}
           />
           <IconButton
             icon="close"
             size={36}
             style={{width:36, height: 36}}
-            iconColor="red"
+            iconColor={theme.colors.error}
             onPress={hideModal}
           />
         </Modal>
@@ -56,8 +57,7 @@ const RatingModal = ({ currentRating, updateRating }) => {
         icon="pencil"
         mode="contained"
         size={24}
-        iconColor="#0085EB"
-        containerColor="#E6E6E6"
+        iconColor={theme.colors.secondary}
         onPress={showModal}
       />
     </View>

@@ -1,4 +1,4 @@
-import { Card } from 'react-native-paper';
+import { Card, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import ChipGroup from './ChipGroup';
 
 const RestaurantCard = ({ restaurant }) => {
   const navigation = useNavigation();
+  const theme = useTheme();
 
   const handlePress = () => {
     navigation.setOptions({ });
@@ -20,7 +21,7 @@ const RestaurantCard = ({ restaurant }) => {
         <Card.Content>
           <View style={{ display: 'flex', flexDirection: 'row' }}>
             {[...Array(restaurant.rating)].map((e, i) => (
-              <MaterialIcons name="star" size={24} key={i} />
+              <MaterialIcons name="star" size={30} key={i} color={theme.colors.secondary} />
             ))}
           </View>
           <ChipGroup tags={restaurant.tags} />
