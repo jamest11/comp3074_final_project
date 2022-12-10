@@ -1,5 +1,5 @@
 import { ToastAndroid, View } from 'react-native';
-import { HelperText, TextInput } from 'react-native-paper';
+import { HelperText, TextInput, useTheme } from 'react-native-paper';
 import styles from '../../styles';
 import { useEffect, useRef, useState } from 'react';
 import { useStorage } from '../StorageContextProvider';
@@ -28,6 +28,7 @@ const FormScreen = ({ navigation, route }) => {
   const [formData, setFormData] = useState(createForm(fields));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const address = useRef();
+  const theme = useTheme();
 
 
   const apiKey = 'AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM';
@@ -109,7 +110,7 @@ const FormScreen = ({ navigation, route }) => {
         onChangeText={text => setFormText('name', text)}
         error={formData.name.error}
         value={formData.name.value}
-        activeUnderlineColor="#0097A7"
+        activeUnderlineColor={theme.colors.primary}
         style={styles.textInput}
       />
       {formData.name.error && (
@@ -121,7 +122,7 @@ const FormScreen = ({ navigation, route }) => {
         onChangeText={text => setFormText('phone', text)}
         value={formData.phone.value}
         error={formData.phone.error}
-        activeUnderlineColor="#0097A7"
+        activeUnderlineColor={theme.colors.primary}
         style={styles.textInput}
       />
       {formData.phone.error && (

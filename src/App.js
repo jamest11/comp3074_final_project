@@ -3,8 +3,9 @@ import 'react-native-gesture-handler';
 import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Provider as PaperProvider, MD3LightTheme as DefaultTheme } from 'react-native-paper';
+import { Provider as PaperProvider, useTheme } from 'react-native-paper';
 import { createStackNavigator } from '@react-navigation/stack';
+import { MaterialIcons } from '@expo/vector-icons';
 import AboutScreen from './components/screens/AboutScreen';
 import ListScreen from './components/screens/ListScreen';
 import RestaurantScreen from './components/screens/RestaurantScreen';
@@ -12,22 +13,34 @@ import StorageContextProvider from './components/StorageContextProvider';
 import AddButton from './components/common/AddButton';
 import FormScreen from './components/screens/FormScreen';
 import MapScreen from './components/screens/MapScreen';
+import SearchScreen from './components/screens/SearchScreen';
+import { appTheme } from './styles';
 
-LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
+// LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const DrawerNav = () => {
+  const theme = useTheme();
+
   return (
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#0097A7'
+          backgroundColor: theme.colors.primary
         },
-        headerTintColor: 'white'
+        headerTintColor: 'white',
+        drawerStyle:{
+          backgroundColor: theme.colors.surface
+        }
       }}
+      drawerContentContainerStyle={{
+        backgroundColor: 'black',
+        color: 'black'
+      }}
+
     >
       <Drawer.Screen
         name="Home"
@@ -35,12 +48,23 @@ const DrawerNav = () => {
         options={{
           headerRight: () => <AddButton />,
           drawerLabel: 'Restaurants',
+          drawerIcon: ({size, color}) => <MaterialIcons name="restaurant" size={size} color={color} />
+        }}
+      />
+      <Drawer.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          drawerIcon: ({size, color}) => <MaterialIcons name="search" size={size} color={color} />
         }}
       />
       <Drawer.Screen
         name="About"
         component={AboutScreen}
-/>
+        options={{
+          drawerIcon: ({size, color}) => <MaterialIcons name="info-outline" size={size} color={color} />
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -48,15 +72,16 @@ const DrawerNav = () => {
 function App() {
   return (
     <StorageContextProvider>
-      <PaperProvider theme={DefaultTheme}>
-        <NavigationContainer>
+      <PaperProvider theme={appTheme}>
+        <NavigationContainer theme={appTheme}>
           <Stack.Navigator
             initialRouteName="Drawer"
             screenOptions={{
               headerStyle: {
-                backgroundColor: '#0097A7'
+                backgroundColor: appTheme.colors.primary
               },
               headerTintColor: 'white',
+              presentation: 'modal'
             }}
           >
             <Stack.Screen
@@ -99,6 +124,6 @@ function App() {
       </PaperProvider>
     </StorageContextProvider>
   );
-};
+}
 
 registerRootComponent(App);

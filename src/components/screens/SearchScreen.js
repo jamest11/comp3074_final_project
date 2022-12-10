@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
-import { Button, RadioButton, Text, TextInput } from 'react-native-paper';
-import { useEffect, useRef, useState } from 'react';
+import { RadioButton, Text, TextInput } from 'react-native-paper';
+import { useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 import RestaurantCard from '../common/RestaurantCard';
@@ -16,6 +16,10 @@ const SearchScreen = () => {
   const searchInput = useRef();
 
   const handleSearch = () => {
+    if(query.current.length === 0) {
+      return;
+    }
+
     const result = [];
 
     if(mode === 'name') {
