@@ -7,11 +7,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   about: {
-    display: 'flex',
     alignItems: 'center',
   },
   flexGroup: {
-    display: 'flex',
     flexDirection: 'row',
     marginVertical: 4,
     flexWrap: 'wrap',
@@ -19,7 +17,6 @@ const styles = StyleSheet.create({
   },
   ratingModal: {
     backgroundColor: 'white',
-    display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -35,7 +32,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'white',
     marginBottom: 10
-  }
+  },
 });
 
 const paperColors = {

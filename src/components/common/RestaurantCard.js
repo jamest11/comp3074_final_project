@@ -19,7 +19,7 @@ const RestaurantCard = ({ restaurant }) => {
       <Card style={{ marginBottom: 8 }}>
         <Card.Title title={restaurant.name} titleVariant="titleLarge" />
         <Card.Content>
-          <View style={{ display: 'flex', flexDirection: 'row' }}>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
             {[...Array(restaurant.rating)].map((e, i) => (
               <MaterialIcons name="star" size={30} key={i} color={theme.colors.secondary} />
             ))}

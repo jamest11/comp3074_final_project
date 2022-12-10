@@ -1,11 +1,12 @@
 import { View } from 'react-native';
-import styles from '../../styles';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-import ChipGroup from '../common/ChipGroup';
-import RatingGroup from '../common/RatingGroup';
 import { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
+import ChipGroup from '../common/ChipGroup';
+import RatingGroup from '../common/RatingGroup';
+import styles from '../../styles';
 import RatingModal from '../common/RatingModal';
 import { useStorage } from '../StorageContextProvider';
 import EditButton from '../common/EditButton';
@@ -26,7 +27,7 @@ const RestaurantScreen = ({ route, navigation }) => {
   }, [navigation, restaurant]);
 
   useEffect(() => {
-    setRestaurant(findRestaurant(route.params.id));
+    setRestaurant(findRestaurant(route.params?.id));
   }, [restaurants]);
 
   return (
@@ -41,31 +42,38 @@ const RestaurantScreen = ({ route, navigation }) => {
         <RatingModal currentRating={restaurant.rating} updateRating={updateRating} />
       </View>
 
-      <View style={styles.flexGroup}>
-        <MaterialIcons name="place" size={36} color={theme.colors.secondary} />
-        <Text variant="titleMedium" style={{ flex: 1, flexWrap: 'wrap' }}>
-          {restaurant.address}
-        </Text>
-      </View>
+      {restaurant.address?.length > 0 && (
+        <>
+          <View style={styles.flexGroup}>
+            <MaterialIcons name="place" size={36} color={theme.colors.secondary} />
+            <Text variant="titleMedium" style={{ flex: 1, flexWrap: 'wrap' }}>
+              {restaurant.address}
+            </Text>
+          </View>
 
-      <View style={styles.flexGroup}>
-        <Button
-          icon="map"
-          mode="contained"
-          buttonColor={theme.colors.secondary}
-          onPress={() => navigation.navigate('Map')}
-        >
-          Map
-        </Button>
-        <Button
-          icon="directions-fork"
-          mode="contained"
-          buttonColor={theme.colors.secondary}
-          style={{ marginStart: 8 }}
-        >
-          Directions
-        </Button>
-      </View>
+          <View style={styles.flexGroup}>
+            <Button
+              icon="map"
+              mode="contained"
+              buttonColor={theme.colors.secondary}
+              onPress={() => navigation.navigate('Map', { address: restaurant.address })}
+            >
+              Map
+            </Button>
+            <Button
+              icon="directions-fork"
+              mode="contained"
+              buttonColor={theme.colors.secondary}
+              style={{ marginStart: 8 }}
+              onPress={() => {
+                Linking.openURL("geo:0,0?q=" + encodeURI(restaurant.address)).catch(console.error);
+              }}
+            >
+              Directions
+            </Button>
+          </View>
+        </>
+      )}
 
       <StatusBar style="light" />
     </View>
