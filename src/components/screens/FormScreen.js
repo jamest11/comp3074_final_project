@@ -110,10 +110,7 @@ const FormScreen = ({ navigation, route }) => {
         error={formData.name.error}
         value={formData.name.value}
         activeUnderlineColor="#0097A7"
-        style={{
-          backgroundColor: 'white',
-          marginBottom: 10,
-        }}
+        style={styles.textInput}
       />
       {formData.name.error && (
         <HelperText type="error" visible={formData.name.error} padding="none">{formData.name.message}</HelperText>
@@ -125,10 +122,7 @@ const FormScreen = ({ navigation, route }) => {
         value={formData.phone.value}
         error={formData.phone.error}
         activeUnderlineColor="#0097A7"
-        style={{
-          backgroundColor: 'white',
-          marginBottom: 10,
-        }}
+        style={styles.textInput}
       />
       {formData.phone.error && (
         <HelperText type="error" visible={formData.phone.error} padding="none">{formData.phone.message}</HelperText>
@@ -141,10 +135,7 @@ const FormScreen = ({ navigation, route }) => {
         multiline
         numberOfLines={3}
         activeUnderlineColor="#0097A7"
-        style={{
-          backgroundColor: 'white',
-          marginBottom: 10,
-        }}
+        style={styles.textInput}
       />
 
       <GooglePlacesAutocomplete

@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import uuid from 'react-native-uuid';
 import storageApi from '../services/storageApi';
 
-const StorageContext = createContext();
+const StorageContext = createContext(null);
 
 const StorageContextProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
