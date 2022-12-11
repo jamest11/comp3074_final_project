@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import { Button, Text, useTheme } from 'react-native-paper';
+import { Share, View } from 'react-native';
+import { Button, FAB, Text, useTheme } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -12,7 +12,6 @@ import { useStorage } from '../StorageContextProvider';
 import EditButton from '../common/EditButton';
 
 // TODO Improve styling
-// TODO Share button
 // TODO Phone number link
 const RestaurantScreen = ({ route, navigation }) => {
   const { updateRestaurant, findRestaurant, emptyRestaurant, restaurants } = useStorage();
@@ -33,8 +32,18 @@ const RestaurantScreen = ({ route, navigation }) => {
     setRestaurant(findRestaurant(route.params?.id));
   }, [restaurants]);
 
+  const onShare = () => {
+    Share.share({
+      message:
+        `Check out the restaurant ${restaurant.name} at ${restaurant.address}.\n` +
+        (restaurant.phone.length > 0 ? `Their phone number is ${restaurant.phone}.\n` : '') +
+        (restaurant.rating !== 0 ? `I gave them a ${restaurant.rating}/5 score.` : ''),
+    }).catch(console.error);
+  };
+
   return (
     <View style={styles.container}>
+
       <Text variant="titleLarge">{restaurant.name}</Text>
       <Text>{restaurant.phone}</Text>
       <Text>{restaurant.description}</Text>
@@ -79,7 +88,12 @@ const RestaurantScreen = ({ route, navigation }) => {
           </View>
         </>
       )}
-
+      <FAB
+        icon="share-variant"
+        style={styles.fab}
+        onPress={onShare}
+        color="white"
+      />
       <StatusBar style="light" />
     </View>
   );
