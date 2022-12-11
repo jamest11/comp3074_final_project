@@ -20,6 +20,10 @@ const createForm = (fields) => {
   return form;
 };
 
+// TODO Delete button
+// TODO Tags input
+// TODO Phone number formatting
+// TODO Form validation
 const FormScreen = ({ navigation, route }) => {
   const fields = ['name', 'phone', 'description', 'address'];
   const id = route.params?.id;

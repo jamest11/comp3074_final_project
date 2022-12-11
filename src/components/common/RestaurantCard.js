@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ChipGroup from './ChipGroup';
 
-
+// TODO Add more restaurant info
 const RestaurantCard = ({ restaurant }) => {
   const navigation = useNavigation();
   const theme = useTheme();

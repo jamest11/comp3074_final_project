@@ -69,6 +69,7 @@ const DrawerNav = () => {
   );
 };
 
+// TODO Splash screen
 function App() {
   return (
     <StorageContextProvider>

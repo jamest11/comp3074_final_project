@@ -1,6 +1,6 @@
 import MapView, { Marker } from 'react-native-maps';
 import { View } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Geocoder from 'react-native-geocoding';
 import styles from '../../styles';
 import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
@@ -13,8 +13,8 @@ const MapScreen = ({ route }) => {
   const [coords, setCoords] = useState();
   const [region, setRegion] = useState();
   const [loading, setLoading] = useState(true);
-  const marker = useRef();
   const address = route.params?.address;
+  const title = route.params?.title;
 
   useEffect(() => {
     Geocoder.from(address)
@@ -24,7 +24,6 @@ const MapScreen = ({ route }) => {
 
         setCoords(loc);
         setRegion({...loc, latitudeDelta: 0.0922, longitudeDelta: 0.0421, });
-        marker.current?.showCallout();
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -38,7 +37,7 @@ const MapScreen = ({ route }) => {
         <>
           {coords ? (
             <MapView style={styles.map} region={region}>
-              <Marker coordinate={coords} title="Pizza Pizza" description="Pizza restaurant" ref={marker} />
+              <Marker coordinate={coords} title={title} ref={ref => {ref?.showCallout();}} />
             </MapView>
           ) : (
             <View style={styles.container}>

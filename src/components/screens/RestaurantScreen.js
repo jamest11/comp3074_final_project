@@ -11,6 +11,9 @@ import RatingModal from '../common/RatingModal';
 import { useStorage } from '../StorageContextProvider';
 import EditButton from '../common/EditButton';
 
+// TODO Improve styling
+// TODO Share button
+// TODO Phone number link
 const RestaurantScreen = ({ route, navigation }) => {
   const { updateRestaurant, findRestaurant, emptyRestaurant, restaurants } = useStorage();
   const [restaurant, setRestaurant] = useState(emptyRestaurant);
@@ -56,7 +59,9 @@ const RestaurantScreen = ({ route, navigation }) => {
               icon="map"
               mode="contained"
               buttonColor={theme.colors.secondary}
-              onPress={() => navigation.navigate('Map', { address: restaurant.address })}
+              onPress={() => {
+                navigation.navigate('Map', { address: restaurant.address, title: restaurant.name });
+              }}
             >
               Map
             </Button>
