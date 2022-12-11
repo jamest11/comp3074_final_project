@@ -23,7 +23,7 @@ const RatingModal = ({ currentRating, updateRating }) => {
   return (
     <View>
       <Portal>
-        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.ratingModal}>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
           <View style={styles.flexGroup}>
             {[...Array(5)].map((e, i) => (
               <IconButton

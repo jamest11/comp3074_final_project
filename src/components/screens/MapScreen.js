@@ -2,9 +2,10 @@ import MapView, { Marker } from 'react-native-maps';
 import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 import Geocoder from 'react-native-geocoding';
-import styles from '../../styles';
-import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
+import styles from '../../styles';
+
 
 Geocoder.init('AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM');
 

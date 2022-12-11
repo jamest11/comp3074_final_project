@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center'
   },
-  ratingModal: {
+  modal: {
     backgroundColor: 'white',
     flexDirection: 'row',
     flexWrap: 'wrap',
