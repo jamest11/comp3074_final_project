@@ -9,7 +9,7 @@ const ChipGroup = ({ tags }) => {
   return (
     <View style={styles.flexGroup}>
       {tags.length > 0 && tagList.map((tag) => (
-        <Chip style={{ marginEnd: 4, backgroundColor: '#CDE7ECFF' }} key={tag}>{upperFirst(tag)}</Chip>
+        <Chip style={{ marginEnd: 4, backgroundColor: '#CDE7ECFF', height: 35, marginTop: 4 }} key={tag}>{upperFirst(tag)}</Chip>
       ))}
     </View>
   );

@@ -10,7 +10,7 @@ const StorageContextProvider = ({ children }) => {
   const emptyRestaurant = {
     id: null,
     name: '',
-    phoneNumber: '',
+    phone: '',
     description: '',
     address: '',
     tags: '',
@@ -21,7 +21,9 @@ const StorageContextProvider = ({ children }) => {
     storageApi.getRestaurants()
       .then(data => {
         if(data != null) {
-          setRestaurants(JSON.parse(data));
+          const r = JSON.parse(data);
+          r.sort((a, b) => a.name > b.name);
+          setRestaurants(r);
         }
       })
       .catch(console.error);

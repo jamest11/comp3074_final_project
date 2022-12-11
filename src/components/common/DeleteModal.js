@@ -44,7 +44,15 @@ const DeleteModal = ({ id }) => {
         </Modal>
       </Portal>
 
-      <Button mode="outlined" onPress={showModal} style={{ marginTop: 8}} textColor={theme.colors.error}>DELETE</Button>
+      <Button
+        mode="outlined"
+        onPress={showModal}
+        style={{ marginTop: 8}}
+        textColor={theme.colors.error}
+        outlineColor={theme.colors.primary}
+      >
+        DELETE
+      </Button>
     </View>
 
   );

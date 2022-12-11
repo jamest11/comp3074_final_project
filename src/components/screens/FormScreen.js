@@ -23,7 +23,6 @@ const createForm = (fields) => {
   return form;
 };
 
-// TODO Phone number formatting
 // TODO Form validation
 const FormScreen = ({ navigation, route }) => {
   const fields = ['name', 'phone', 'description', 'tags', 'address'];
@@ -138,7 +137,7 @@ const FormScreen = ({ navigation, route }) => {
         onChangeText={text => setFormText('description', text)}
         value={formData.description.value}
         multiline
-        numberOfLines={4}
+        numberOfLines={3}
         activeUnderlineColor="#0097A7"
         style={styles.textInput}
       />

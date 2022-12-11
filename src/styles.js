@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 4,
     flexWrap: 'wrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   modal: {
     backgroundColor: appTheme.colors.surface,

@@ -11,8 +11,6 @@ import RatingModal from '../common/RatingModal';
 import { useStorage } from '../StorageContextProvider';
 import EditButton from '../common/EditButton';
 
-// TODO Improve styling
-// TODO Phone number link
 const RestaurantScreen = ({ route, navigation }) => {
   const { updateRestaurant, findRestaurant, emptyRestaurant, restaurants } = useStorage();
   const [restaurant, setRestaurant] = useState(emptyRestaurant);
@@ -32,11 +30,15 @@ const RestaurantScreen = ({ route, navigation }) => {
     setRestaurant(findRestaurant(route.params?.id));
   }, [restaurants]);
 
+  const formatPhone = (phone) => {
+    return `(${phone.slice(0,3)}) ${phone.slice(3, 6)} ${phone.slice(6, 10)} ${phone.slice(10)}`;
+  };
+
   const onShare = () => {
     Share.share({
       message:
         `Check out the restaurant ${restaurant.name} at ${restaurant.address}.\n` +
-        (restaurant.phone.length > 0 ? `Their phone number is ${restaurant.phone}.\n` : '') +
+        (restaurant.phone.length > 0 ? `Their phone number is ${formatPhone(restaurant.phone)}.\n` : '') +
         (restaurant.rating !== 0 ? `I gave them a ${restaurant.rating}/5 score.` : ''),
     }).catch(console.error);
   };
@@ -44,19 +46,31 @@ const RestaurantScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
 
-      <Text variant="titleLarge">{restaurant.name}</Text>
-      <Text>{restaurant.phone}</Text>
-      <Text>{restaurant.description}</Text>
+      <Text variant="headlineLarge">{restaurant.name}</Text>
+      {restaurant.phone.length > 0  && (
+        <Text
+          onPress={() => Linking.openURL(`tel:${restaurant.phone}`)}
+          variant="headlineSmall"
+          style={{ color: theme.colors.primary, marginVertical: 16 }}
+        >
+          {formatPhone(restaurant.phone)}
+        </Text>
+      )}
+
+      {restaurant.description.length > 0 && (
+        <Text variant="bodyLarge" style={{ marginTop: 12 }}>{restaurant.description}</Text>
+      )}
+
       <ChipGroup tags={restaurant.tags} />
 
-      <View style={styles.flexGroup}>
+      <View style={[styles.flexGroup, { marginTop: 12 }]}>
         <RatingGroup size={36} rating={restaurant.rating} />
         <RatingModal currentRating={restaurant.rating} updateRating={updateRating} />
       </View>
 
       {restaurant.address?.length > 0 && (
         <>
-          <View style={styles.flexGroup}>
+          <View style={[styles.flexGroup, {marginTop: 12}]}>
             <MaterialIcons name="place" size={36} color={theme.colors.secondary} />
             <Text variant="titleMedium" style={{ flex: 1, flexWrap: 'wrap' }}>
               {restaurant.address}

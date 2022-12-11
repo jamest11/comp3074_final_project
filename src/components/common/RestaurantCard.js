@@ -4,7 +4,6 @@ import { TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ChipGroup from './ChipGroup';
 
-// TODO Add more restaurant info
 const RestaurantCard = ({ restaurant }) => {
   const navigation = useNavigation();
   const theme = useTheme();
@@ -19,7 +18,7 @@ const RestaurantCard = ({ restaurant }) => {
       <Card style={{ marginBottom: 8 }}>
         <Card.Title title={restaurant.name} titleVariant="titleLarge" />
         <Card.Content>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ flex: 1, flexDirection: 'row', marginBottom: 4 }}>
             {[...Array(restaurant.rating)].map((e, i) => (
               <MaterialIcons name="star" size={30} key={i} color={theme.colors.secondary} />
             ))}

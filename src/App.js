@@ -46,6 +46,7 @@ const DrawerNav = () => {
         name="Home"
         component={ListScreen}
         options={{
+          title: 'Restaurants',
           headerRight: () => <AddButton />,
           drawerLabel: 'Restaurants',
           drawerIcon: ({size, color}) => <MaterialIcons name="restaurant" size={size} color={color} />
