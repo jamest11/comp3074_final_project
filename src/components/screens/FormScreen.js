@@ -1,10 +1,12 @@
 import { ToastAndroid, View } from 'react-native';
-import { HelperText, TextInput, useTheme } from 'react-native-paper';
-import styles from '../../styles';
+import { Button, HelperText, TextInput, useTheme } from 'react-native-paper';
 import { useEffect, useRef, useState } from 'react';
-import { useStorage } from '../StorageContextProvider';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import CheckButton from '../common/CheckButton';
+import { useStorage } from '../StorageContextProvider';
+import styles from '../../styles';
+import DeleteModal from '../common/DeleteModal';
+
 
 const createForm = (fields) => {
   const formField = {
@@ -20,7 +22,6 @@ const createForm = (fields) => {
   return form;
 };
 
-// TODO Delete button
 // TODO Tags input
 // TODO Phone number formatting
 // TODO Form validation
@@ -28,12 +29,11 @@ const FormScreen = ({ navigation, route }) => {
   const fields = ['name', 'phone', 'description', 'address'];
   const id = route.params?.id;
 
-  const {addRestaurant, updateRestaurant, findRestaurant} = useStorage();
+  const {addRestaurant, updateRestaurant, findRestaurant, deleteRestaurant} = useStorage();
   const [formData, setFormData] = useState(createForm(fields));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const address = useRef();
   const theme = useTheme();
-
 
   const apiKey = 'AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM';
 
@@ -162,9 +162,17 @@ const FormScreen = ({ navigation, route }) => {
           textInput: {
             height: 56,
           },
+          container: {
+            flex: 0
+          }
         }}
+
         ref={address}
       />
+
+      {id && (
+        <DeleteModal id={id} />
+      )}
 
     </View>
   );

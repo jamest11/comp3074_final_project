@@ -8,7 +8,7 @@ const emptyRestaurant = {
   address: '',
   tags: '',
   rating: 0
-}
+};
 
 //AsyncStorage.clear();
 
@@ -25,7 +25,7 @@ const addRestaurant = async (data) => {
     restaurants = [];
   }
 
-  restaurants.push(restaurant)
+  restaurants.push(restaurant);
 
   return AsyncStorage.setItem('@restaurants', JSON.stringify(restaurants));
 };
@@ -36,12 +36,21 @@ const updateRestaurant = async (data) => {
 
   for(let i = 0; i < restaurants.length; i++) {
     if(data.id === restaurants[i].id) {
-      restaurants[i] = {...restaurants[i], ...data}
+      restaurants[i] = {...restaurants[i], ...data};
     }
   }
 
-  await AsyncStorage.setItem('@restaurants', JSON.stringify(restaurants))
-}
+  await AsyncStorage.setItem('@restaurants', JSON.stringify(restaurants));
+};
 
-const exports = { getRestaurants, addRestaurant, updateRestaurant }
+const deleteRestaurant = async (id) => {
+  let restaurants = await getRestaurants();
+  restaurants = JSON.parse(restaurants);
+
+  restaurants = restaurants.filter((r) => r.id !== id);
+
+  await AsyncStorage.setItem('@restaurants', JSON.stringify(restaurants));
+};
+
+const exports = { getRestaurants, addRestaurant, updateRestaurant, deleteRestaurant };
 export default exports;

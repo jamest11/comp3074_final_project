@@ -48,12 +48,19 @@ const StorageContextProvider = ({ children }) => {
       .catch(console.error);
   };
 
+  const deleteRestaurant = (id) => {
+    storageApi.deleteRestaurant(id)
+      .then(getRestaurants)
+      .catch(console.error);
+  };
+
   const value = {
     restaurants,
     addRestaurant,
     updateRestaurant,
     emptyRestaurant,
-    findRestaurant
+    findRestaurant,
+    deleteRestaurant
   };
 
   return (
