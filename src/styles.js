@@ -2,39 +2,6 @@ import { StyleSheet } from 'react-native';
 import { adaptNavigationTheme, MD3LightTheme as DefaultTheme } from 'react-native-paper';
 import { DefaultTheme as NavigationDefaultTheme, } from '@react-navigation/native';
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  about: {
-    alignItems: 'center',
-  },
-  flexGroup: {
-    flexDirection: 'row',
-    marginVertical: 4,
-    flexWrap: 'wrap',
-    alignItems: 'center'
-  },
-  modal: {
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    padding: 12,
-    width: '90%',
-    alignSelf: 'center',
-    borderRadius: 8
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-  textInput: {
-    backgroundColor: 'white',
-    marginBottom: 10
-  },
-});
-
 const paperColors = {
   "primary": "rgb(0, 104, 116)",
     "onPrimary": "rgb(255, 255, 255)",
@@ -66,7 +33,7 @@ const paperColors = {
     "inverseOnSurface": "rgb(239, 241, 241)",
     "inversePrimary": "rgb(79, 216, 235)",
     "elevation": {
-    "level0": "transparent",
+      "level0": "transparent",
       "level1": "rgb(238, 246, 246)",
       "level2": "rgb(230, 241, 242)",
       "level3": "rgb(223, 237, 238)",
@@ -91,6 +58,47 @@ const appTheme = {
     //secondary: '#d4301b',
   },
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  about: {
+    alignItems: 'center',
+  },
+  flexGroup: {
+    flexDirection: 'row',
+    marginVertical: 4,
+    flexWrap: 'wrap',
+    alignItems: 'center'
+  },
+  modal: {
+    backgroundColor: appTheme.colors.surface,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    padding: 12,
+    width: '90%',
+    alignSelf: 'center',
+    borderRadius: 8
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+  textInput: {
+    backgroundColor: appTheme.colors.elevation.level1,
+    marginBottom: 10
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    top: 1,
+    backgroundColor: appTheme.colors.secondary,
+  },
+});
+
 
 export default styles;
 export { appTheme };

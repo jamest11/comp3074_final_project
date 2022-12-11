@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import Geocoder from 'react-native-geocoding';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
+import { GOOGLE_API_KEY } from '@env';
 import styles from '../../styles';
 
 
-Geocoder.init('AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM');
+Geocoder.init(GOOGLE_API_KEY);
 
 const MapScreen = ({ route }) => {
   const theme = useTheme();

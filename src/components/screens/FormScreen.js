@@ -1,7 +1,8 @@
 import { ToastAndroid, View } from 'react-native';
-import { Button, HelperText, TextInput, useTheme } from 'react-native-paper';
+import { HelperText, TextInput, useTheme } from 'react-native-paper';
 import { useEffect, useRef, useState } from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GOOGLE_API_KEY } from '@env';
 import CheckButton from '../common/CheckButton';
 import { useStorage } from '../StorageContextProvider';
 import styles from '../../styles';
@@ -22,20 +23,17 @@ const createForm = (fields) => {
   return form;
 };
 
-// TODO Tags input
 // TODO Phone number formatting
 // TODO Form validation
 const FormScreen = ({ navigation, route }) => {
-  const fields = ['name', 'phone', 'description', 'address'];
+  const fields = ['name', 'phone', 'description', 'tags', 'address'];
   const id = route.params?.id;
 
-  const {addRestaurant, updateRestaurant, findRestaurant, deleteRestaurant} = useStorage();
+  const {addRestaurant, updateRestaurant, findRestaurant} = useStorage();
   const [formData, setFormData] = useState(createForm(fields));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const address = useRef();
   const theme = useTheme();
-
-  const apiKey = 'AIzaSyBIykz6gl4NQebgTkxuEmzXlonylu3mEXM';
 
   const setFormText = (field, value) => {
     setFormData(data => ({...data, [field]: {...data[field], value}}));
@@ -55,13 +53,15 @@ const FormScreen = ({ navigation, route }) => {
     else {
       setFormError('name', false, '');
     }
+
     setIsSubmitted(false);
 
     if(!errors) {
       let data = {
         name: formData.name.value.trim(),
-        phone: formData.phone.value,
+        phone: formData.phone.value.replace(/\D/g,''),
         description: formData.description.value,
+        tags: formData.tags.value,
         address: formData.address.value
       };
       if(id) {
@@ -138,17 +138,27 @@ const FormScreen = ({ navigation, route }) => {
         onChangeText={text => setFormText('description', text)}
         value={formData.description.value}
         multiline
-        numberOfLines={3}
+        numberOfLines={4}
         activeUnderlineColor="#0097A7"
         style={styles.textInput}
       />
+
+      <TextInput
+        label="Tags"
+        onChangeText={text => setFormText('tags', text)}
+        value={formData.tags.value}
+        error={formData.tags.error}
+        activeUnderlineColor={theme.colors.primary}
+        style={[styles.textInput, {marginBottom: 0}]}
+      />
+      <HelperText padding="none">Separate tags with a comma</HelperText>
 
       <GooglePlacesAutocomplete
         onPress={(data, details = null) => {
           setFormText('address', data.description);
         }}
         query={{
-          key: apiKey,
+          key: GOOGLE_API_KEY,
           language: 'en',
           components: 'country:ca',
         }}
@@ -156,17 +166,18 @@ const FormScreen = ({ navigation, route }) => {
           InputComp: TextInput,
           label: 'Address',
           mode: 'flat',
-          activeUnderlineColor: '#0097A7'
+          activeUnderlineColor: '#0097A7',
+          right: (<TextInput.Icon icon="map-marker" color={(focus) => focus ? theme.colors.primary : undefined} />)
         }}
         styles={{
           textInput: {
             height: 56,
+            backgroundColor: theme.colors.elevation.level1
           },
           container: {
             flex: 0
           }
         }}
-
         ref={address}
       />
 
