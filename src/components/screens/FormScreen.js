@@ -1,12 +1,13 @@
-import { ToastAndroid, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, ToastAndroid, View } from 'react-native';
 import { HelperText, TextInput, useTheme } from 'react-native-paper';
 import { useEffect, useRef, useState } from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GOOGLE_API_KEY } from '@env';
 import CheckButton from '../common/CheckButton';
 import { useStorage } from '../StorageContextProvider';
 import styles from '../../styles';
-import DeleteModal from '../common/DeleteModal';
+import DeleteDialog from '../common/DeleteDialog';
 
 
 const createForm = (fields) => {
@@ -39,7 +40,7 @@ const FormScreen = ({ navigation, route }) => {
   };
 
   const setFormError = (field, error, message) => {
-    setFormData({...formData, [field]: {...formData[field], error, message}});
+    setFormData(data => ({...data, [field]: {...data[field], error, message}}));
   };
 
   const handleSubmit = () => {
@@ -53,12 +54,21 @@ const FormScreen = ({ navigation, route }) => {
       setFormError('name', false, '');
     }
 
+    const phone = formData.phone.value.replace(/\D/g,'');
+    if(phone.length > 0 && phone.length < 10) {
+      errors = true;
+      setFormError('phone', true, 'Phone number must be at least 10 digits');
+    }
+    else {
+      setFormError('phone', false, '');
+    }
+
     setIsSubmitted(false);
 
     if(!errors) {
       let data = {
         name: formData.name.value.trim(),
-        phone: formData.phone.value.replace(/\D/g,''),
+        phone,
         description: formData.description.value,
         tags: formData.tags.value,
         address: formData.address.value
@@ -80,11 +90,16 @@ const FormScreen = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
+        <View style={{ flexDirection: 'row' }}>
+        {id && (
+          <DeleteDialog id={id} />
+        )}
         <CheckButton
           onPress={() => setIsSubmitted((prevState) => !prevState)}
-        />)
+        />
+        </View>)
     });
-  }, [navigation, setIsSubmitted]);
+  }, [navigation, setIsSubmitted, id]);
 
   useEffect(() => {
     if(isSubmitted) {
@@ -107,7 +122,11 @@ const FormScreen = ({ navigation, route }) => {
   }, [id]);
 
   return (
-    <View style={[styles.container, {flex: 1, width: 'auto'}]}>
+    <View style={[styles.container,{flex: 1} ]}>
+      {formData.name.error && (
+        <HelperText type="error" visible={formData.name.error} padding="none">{formData.name.message}</HelperText>
+      )}
+      {formData.name.error}
       <TextInput
         label="Name"
         onChangeText={text => setFormText('name', text)}
@@ -116,41 +135,6 @@ const FormScreen = ({ navigation, route }) => {
         activeUnderlineColor={theme.colors.primary}
         style={styles.textInput}
       />
-      {formData.name.error && (
-        <HelperText type="error" visible={formData.name.error} padding="none">{formData.name.message}</HelperText>
-      )}
-      
-      <TextInput
-        label="Phone"
-        onChangeText={text => setFormText('phone', text)}
-        value={formData.phone.value}
-        error={formData.phone.error}
-        activeUnderlineColor={theme.colors.primary}
-        style={styles.textInput}
-      />
-      {formData.phone.error && (
-        <HelperText type="error" visible={formData.phone.error} padding="none">{formData.phone.message}</HelperText>
-      )}
-
-      <TextInput
-        label="Description"
-        onChangeText={text => setFormText('description', text)}
-        value={formData.description.value}
-        multiline
-        numberOfLines={3}
-        activeUnderlineColor="#0097A7"
-        style={styles.textInput}
-      />
-
-      <TextInput
-        label="Tags"
-        onChangeText={text => setFormText('tags', text)}
-        value={formData.tags.value}
-        error={formData.tags.error}
-        activeUnderlineColor={theme.colors.primary}
-        style={[styles.textInput, {marginBottom: 0}]}
-      />
-      <HelperText padding="none">Separate tags with a comma</HelperText>
 
       <GooglePlacesAutocomplete
         onPress={(data, details = null) => {
@@ -171,19 +155,49 @@ const FormScreen = ({ navigation, route }) => {
         styles={{
           textInput: {
             height: 56,
-            backgroundColor: theme.colors.elevation.level1
+            backgroundColor: theme.colors.elevation.level1,
+            marginBottom: 10
           },
           container: {
-            flex: 0
+            flex: 0,
           }
         }}
         ref={address}
       />
 
-      {id && (
-        <DeleteModal id={id} />
-      )}
+      <KeyboardAwareScrollView>
+        {formData.phone.error && (
+          <HelperText type="error" visible={formData.phone.error} padding="none">{formData.phone.message}</HelperText>
+        )}
+        <TextInput
+          label="Phone"
+          onChangeText={text => setFormText('phone', text)}
+          value={formData.phone.value}
+          error={formData.phone.error}
+          activeUnderlineColor={theme.colors.primary}
+          style={styles.textInput}
+        />
 
+        <TextInput
+          label="Description"
+          onChangeText={text => setFormText('description', text)}
+          value={formData.description.value}
+          multiline
+          numberOfLines={3}
+          activeUnderlineColor="#0097A7"
+          style={styles.textInput}
+        />
+
+        <TextInput
+          label="Tags"
+          onChangeText={text => setFormText('tags', text)}
+          value={formData.tags.value}
+          error={formData.tags.error}
+          activeUnderlineColor={theme.colors.primary}
+          style={[styles.textInput, {marginBottom: 0}]}
+        />
+        <HelperText padding="none">Separate tags with a comma</HelperText>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
