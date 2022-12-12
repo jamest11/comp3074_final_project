@@ -38,8 +38,8 @@ const RestaurantScreen = ({ route, navigation }) => {
     Share.share({
       message:
         `Check out the restaurant ${restaurant.name} at ${restaurant.address}.\n` +
-        (restaurant.phone.length > 0 ? `Their phone number is ${formatPhone(restaurant.phone)}.\n` : '') +
-        (restaurant.rating !== 0 ? `I gave them a ${restaurant.rating}/5 score.` : ''),
+        (restaurant.phone.length > 0 ? `Their phone number is ${formatPhone(restaurant.phone).trim()}.\n` : '') +
+        (restaurant.rating !== 0 ? `I gave them a ${restaurant.rating}/5 rating.` : ''),
     }).catch(console.error);
   };
 
@@ -58,10 +58,15 @@ const RestaurantScreen = ({ route, navigation }) => {
       )}
 
       {restaurant.description.length > 0 && (
-        <Text variant="bodyLarge" style={{ marginVertical: 12 }}>{restaurant.description}</Text>
+        <>
+          <Text variant="labelMedium" style={{ marginTop: 12 }}>Description</Text>
+          <Text variant="bodyLarge" style={{ marginBottom: 12 }}>{restaurant.description}</Text>
+        </>
       )}
 
-      <ChipGroup tags={restaurant.tags} />
+      {restaurant.tags.length > 0 && (
+        <ChipGroup tags={restaurant.tags} />
+      )}
 
       <View style={[styles.flexGroup, { marginTop: 12 }]}>
         <RatingGroup size={36} rating={restaurant.rating} />

@@ -9,7 +9,6 @@ import { useStorage } from '../StorageContextProvider';
 import styles from '../../styles';
 import DeleteDialog from '../common/DeleteDialog';
 
-
 const createForm = (fields) => {
   const formField = {
     value: '',
@@ -131,7 +130,6 @@ const FormScreen = ({ navigation, route }) => {
         onChangeText={text => setFormText('name', text)}
         error={formData.name.error}
         value={formData.name.value}
-        activeUnderlineColor={theme.colors.primary}
         style={styles.textInput}
       />
 
@@ -148,7 +146,6 @@ const FormScreen = ({ navigation, route }) => {
           InputComp: TextInput,
           label: 'Address',
           mode: 'flat',
-          activeUnderlineColor: '#0097A7',
           right: (<TextInput.Icon icon="map-marker" color={(focus) => focus ? theme.colors.primary : undefined} />)
         }}
         styles={{
@@ -173,8 +170,8 @@ const FormScreen = ({ navigation, route }) => {
           onChangeText={text => setFormText('phone', text)}
           value={formData.phone.value}
           error={formData.phone.error}
-          activeUnderlineColor={theme.colors.primary}
           style={styles.textInput}
+          keyboardType="number-pad"
         />
 
         <TextInput
@@ -183,7 +180,6 @@ const FormScreen = ({ navigation, route }) => {
           value={formData.description.value}
           multiline
           numberOfLines={3}
-          activeUnderlineColor="#0097A7"
           style={styles.textInput}
         />
 
@@ -192,7 +188,6 @@ const FormScreen = ({ navigation, route }) => {
           onChangeText={text => setFormText('tags', text)}
           value={formData.tags.value}
           error={formData.tags.error}
-          activeUnderlineColor={theme.colors.primary}
           style={[styles.textInput, {marginBottom: 0}]}
         />
         <HelperText padding="none">Separate tags with a comma</HelperText>

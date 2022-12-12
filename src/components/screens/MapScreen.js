@@ -7,7 +7,6 @@ import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
 import { GOOGLE_API_KEY } from '@env';
 import styles from '../../styles';
 
-
 Geocoder.init(GOOGLE_API_KEY);
 
 const MapScreen = ({ route }) => {
@@ -49,7 +48,7 @@ const MapScreen = ({ route }) => {
                   Google Maps could not locate the restaurant
                 </Text>
               </View>
-              <Text variant="bodyLarge" style={{ color: theme.colors.error }}>Please update the address</Text>
+              <Text variant="bodyLarge" style={{ color: theme.colors.error }}>Ensure you are connected to the internet</Text>
             </View>
           )}
         </>

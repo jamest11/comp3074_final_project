@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const ListScreen = ({ navigation }) => {
   const { restaurants } = useStorage();
+
   return (
     <ScrollView style={[styles.container]}>
       { restaurants.length > 0 ?
@@ -15,10 +16,10 @@ const ListScreen = ({ navigation }) => {
             <RestaurantCard restaurant={restaurant} key={restaurant.id} />
         ))
      : (
-          <View style={styles.flexGroup}>
-            <MaterialIcons name="info-outline" size={28} color="black" style={{ marginEnd: 8 }} />
-            <Text variant="bodyLarge" style={{ flex: 1 }}>Add a restaurant to the guide by pressing the plus button in the top right</Text>
-          </View>
+        <View style={styles.flexGroup}>
+          <MaterialIcons name="info-outline" size={28} color="black" style={{ marginEnd: 8 }} />
+          <Text variant="bodyLarge" style={{ flex: 1 }}>Add a restaurant to the guide by pressing the plus button in the top right</Text>
+        </View>
       ) }
 
       <StatusBar style="light" />

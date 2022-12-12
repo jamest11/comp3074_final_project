@@ -1,6 +1,5 @@
 import { registerRootComponent } from 'expo';
 import 'react-native-gesture-handler';
-import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Provider as PaperProvider, useTheme } from 'react-native-paper';
@@ -15,8 +14,6 @@ import FormScreen from './components/screens/FormScreen';
 import MapScreen from './components/screens/MapScreen';
 import SearchScreen from './components/screens/SearchScreen';
 import { appTheme } from './styles';
-
-// LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();

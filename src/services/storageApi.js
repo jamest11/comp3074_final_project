@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const emptyRestaurant = {
   id: null,
   name: '',
-  phoneNumber: '',
+  phone: '',
   description: '',
   address: '',
   tags: '',
