@@ -59,11 +59,11 @@ const SearchScreen = () => {
     <View style={styles.container}>
       <RadioButton.Group onValueChange={newValue => setMode(newValue)} value={mode}>
         <View style={[styles.flexGroup, { marginTop: 0 }]}>
-          <View style={styles.flexGroup}>
+          <View style={[styles.flexGroup, { marginEnd: 8}]}>
             <Text>Name</Text>
             <RadioButton value="name" />
           </View>
-          <View style={styles.flexGroup}>
+          <View style={[styles.flexGroup, { marginEnd: 8}]}>
             <Text>Tags</Text>
             <RadioButton value="tags" />
           </View>

@@ -58,7 +58,7 @@ const RestaurantScreen = ({ route, navigation }) => {
       )}
 
       {restaurant.description.length > 0 && (
-        <Text variant="bodyLarge" style={{ marginTop: 12 }}>{restaurant.description}</Text>
+        <Text variant="bodyLarge" style={{ marginVertical: 12 }}>{restaurant.description}</Text>
       )}
 
       <ChipGroup tags={restaurant.tags} />

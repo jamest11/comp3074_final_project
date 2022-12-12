@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, ScrollView, ToastAndroid, View } from 'react-native';
+import { ToastAndroid, View } from 'react-native';
 import { HelperText, TextInput, useTheme } from 'react-native-paper';
 import { useEffect, useRef, useState } from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -24,7 +24,6 @@ const createForm = (fields) => {
   return form;
 };
 
-// TODO Form validation
 const FormScreen = ({ navigation, route }) => {
   const fields = ['name', 'phone', 'description', 'tags', 'address'];
   const id = route.params?.id;
