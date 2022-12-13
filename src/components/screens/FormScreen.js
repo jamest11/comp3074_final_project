@@ -111,6 +111,7 @@ const FormScreen = ({ navigation, route }) => {
       fields.forEach(field => {
         if(field === 'address') {
           address.current?.setAddressText(restaurant.address);
+          setFormText(field, restaurant[field]);
         }
         else {
           setFormText(field, restaurant[field]);
