@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { RadioButton, Text, TextInput } from 'react-native-paper';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons } from '@expo/vector-icons';
 import RestaurantCard from '../common/RestaurantCard';
@@ -54,6 +54,10 @@ const SearchScreen = () => {
     }
     searchInput.current?.blur();
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [restaurants]);
 
   return (
     <View style={styles.container}>
