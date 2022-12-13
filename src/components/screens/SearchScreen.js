@@ -24,22 +24,22 @@ const SearchScreen = () => {
 
     if(mode === 'name') {
       restaurants.forEach(r => {
-        if(r.name.toLowerCase().includes(query.current.toLowerCase())) {
+        if(r.name.toLowerCase().includes(query.current.toLowerCase().trim())) {
           result.push(r);
         }
       });
     }
     else if(mode === 'tags') {
       restaurants.forEach(r => {
-        if(r.tags.toLowerCase().includes(query.current.toLowerCase())) {
+        if(r.tags.toLowerCase().includes(query.current.toLowerCase().trim())) {
           result.push(r);
         }
       });
     }
     else {
       restaurants.forEach(r => {
-        if(r.name.toLowerCase().includes(query.current.toLowerCase()) ||
-            r.tags.toLowerCase().includes(query.current.toLowerCase())) {
+        if(r.name.toLowerCase().includes(query.current.toLowerCase().trim()) ||
+            r.tags.toLowerCase().includes(query.current.toLowerCase().trim())) {
           result.push(r);
         }
       });
